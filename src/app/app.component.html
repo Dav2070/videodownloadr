@@ -10,7 +10,7 @@
 
 		<div class="download-button-container">
 			<dav-button
-        [disabled]="loading"
+        [disabled]="loading || !urlValid"
         (click)="downloadButtonClick()"
       >
         Download

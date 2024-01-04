@@ -4,6 +4,9 @@ import { RouterOutlet } from '@angular/router'
 import { Apollo, gql } from 'apollo-angular'
 import * as DavUIComponents from 'dav-ui-components'
 
+export const youtubeUrlRegex = /^(https?:\/\/)?(www.)?youtube.com\/.+$/
+export const shareYoutubeUrlRegex = /^https:\/\/youtu.be\/.+/
+
 @Component({
 	selector: 'app-root',
 	standalone: true,
@@ -15,6 +18,7 @@ import * as DavUIComponents from 'dav-ui-components'
 export class AppComponent {
 	url: string = ''
 	loading: boolean = false
+	urlValid: boolean = false
 
 	constructor(private apollo: Apollo) {
 		DavUIComponents.setLocale('en-US')
@@ -22,6 +26,8 @@ export class AppComponent {
 
 	urlChange(event: Event) {
 		this.url = (event as CustomEvent).detail.value
+		this.urlValid =
+			youtubeUrlRegex.test(this.url) || shareYoutubeUrlRegex.test(this.url)
 	}
 
 	async downloadButtonClick() {
