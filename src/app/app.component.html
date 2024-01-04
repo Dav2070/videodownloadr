@@ -1,5 +1,20 @@
-<div>
-	<h1>Hello World</h1>
+<div class="container">
+	<div class="headline-container">
+		<h1>Download any YouTube video</h1>
 
-  <dav-button>Hello World</dav-button>
+		<dav-textfield
+			placeholder="Link to your video"
+      [disabled]="loading"
+			(change)="urlChange($event)"
+		></dav-textfield>
+
+		<div class="download-button-container">
+			<dav-button
+        [disabled]="loading"
+        (click)="downloadButtonClick()"
+      >
+        Download
+      </dav-button>
+		</div>
+	</div>
 </div>

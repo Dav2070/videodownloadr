@@ -1,0 +1,23 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.headline-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 48px auto 0;
+}
+
+.headline-container > h1 {
+	display: inline-block;
+	font-weight: 300;
+}
+
+.download-button-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 24px;
+}

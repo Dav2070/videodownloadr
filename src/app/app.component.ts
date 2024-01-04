@@ -13,13 +13,22 @@ import * as DavUIComponents from 'dav-ui-components'
 	styleUrl: './app.component.scss'
 })
 export class AppComponent {
+	url: string = ''
+	loading: boolean = false
+
 	constructor(private apollo: Apollo) {
 		DavUIComponents.setLocale('en-US')
 	}
 
-	async ngOnInit() {
+	urlChange(event: Event) {
+		this.url = (event as CustomEvent).detail.value
+	}
+
+	async downloadButtonClick() {
+		this.loading = true
+
 		let result = await this.apollo
-			.query({
+			.query<{ downloadYoutubeVideo: { url: string } }>({
 				query: gql`
 					query DownloadYoutubeVideo($url: String!) {
 						downloadYoutubeVideo(url: $url) {
@@ -28,11 +37,17 @@ export class AppComponent {
 					}
 				`,
 				variables: {
-					url: 'https://www.youtube.com/watch?v=s9mrozk-bGQ&list=PLLv3qeuV3YDpR4x4iEJZmcZWyDKGXB0Yl&index=9&ab_channel=ThrillerSoundtrackMusic'
+					url: this.url
 				}
 			})
 			.toPromise()
 
-		console.log(result)
+		this.loading = false
+
+		if (result?.data != null) {
+			let a = document.createElement('a')
+			a.href = result.data.downloadYoutubeVideo.url
+			a.click()
+		}
 	}
 }
