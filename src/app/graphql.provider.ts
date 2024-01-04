@@ -3,7 +3,7 @@ import { HttpLink } from 'apollo-angular/http'
 import { ApplicationConfig, inject } from '@angular/core'
 import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core'
 
-const uri = 'http://localhost:4020/'
+const uri = 'https://videodownloadr-api-9y4ij.ondigitalocean.app/'
 
 export function apolloOptionsFactory(): ApolloClientOptions<any> {
 	const httpLink = inject(HttpLink)
