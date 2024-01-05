@@ -19,15 +19,52 @@ export class AppComponent {
 	url: string = ''
 	loading: boolean = false
 	urlValid: boolean = false
+	videoTitle: string = ''
+	videothumbnailUrl: string = ''
+	videoChannelName: string = ''
 
 	constructor(private apollo: Apollo) {
 		DavUIComponents.setLocale('en-US')
 	}
 
-	urlChange(event: Event) {
+	async urlChange(event: Event) {
 		this.url = (event as CustomEvent).detail.value
 		this.urlValid =
 			youtubeUrlRegex.test(this.url) || shareYoutubeUrlRegex.test(this.url)
+
+		if (this.urlValid) {
+			// Get the video info
+			let result = await this.apollo
+				.query<{
+					retrieveYoutubeVideoInfo: {
+						title: string
+						thumbnailUrl: string
+						channelName: string
+					}
+				}>({
+					query: gql`
+						query RetrieveYoutubeVideoInfo($url: String!) {
+							retrieveYoutubeVideoInfo(url: $url) {
+								title
+								thumbnailUrl
+								channelName
+							}
+						}
+					`,
+					variables: {
+						url: this.url
+					}
+				})
+				.toPromise()
+
+			if (result?.data != null) {
+				this.videoTitle = result.data.retrieveYoutubeVideoInfo.title
+				this.videothumbnailUrl =
+					result.data.retrieveYoutubeVideoInfo.thumbnailUrl
+				this.videoChannelName =
+					result.data.retrieveYoutubeVideoInfo.channelName
+			}
+		}
 	}
 
 	async downloadButtonClick() {

@@ -4,17 +4,26 @@
 
 		<dav-textfield
 			placeholder="Link to your video"
-      [disabled]="loading"
+			[disabled]="loading"
 			(change)="urlChange($event)"
 		></dav-textfield>
 
+		<div class="preview-container" *ngIf="urlValid && videoTitle.length > 0">
+			<dav-list-item
+				[headline]="videoTitle"
+				[subhead]="videoChannelName"
+				[imageSrc]="videothumbnailUrl"
+				imageAspectRatio="1:1"
+			></dav-list-item>
+		</div>
+
 		<div class="download-button-container">
 			<dav-button
-        [disabled]="loading || !urlValid"
-        (click)="downloadButtonClick()"
-      >
-        Download
-      </dav-button>
+				[disabled]="loading || !urlValid"
+				(click)="downloadButtonClick()"
+			>
+				Download
+			</dav-button>
 		</div>
 	</div>
 </div>
