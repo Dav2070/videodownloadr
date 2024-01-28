@@ -1,12 +1,16 @@
 <div class="container">
 	<div class="headline-container">
-		<h1>Download any YouTube video</h1>
+		<h1>videodownloadr</h1>
 
-		<dav-textfield
-			placeholder="Link to your video"
-			[disabled]="loading"
-			(change)="urlChange($event)"
-		></dav-textfield>
+		<img class="promo-image" src="/assets/promo.jpg" />
+
+		<div class="textfield-container">
+			<dav-textfield
+				placeholder="Link to your video"
+				[disabled]="loading"
+				(change)="urlChange($event)"
+			></dav-textfield>
+		</div>
 
 		<div class="preview-container" *ngIf="urlValid && videoTitle.length > 0">
 			<dav-list-item
